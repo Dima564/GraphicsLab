@@ -88,12 +88,18 @@ public class BubbleActivity extends Activity {
 				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
 		// TODO - make a new SoundPool, allowing up to 10 streams 
-		mSoundPool = null;
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
 
 		// TODO - set a SoundPool OnLoadCompletedListener that calls setupGestureDetector()
-
+        mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                setupGestureDetector();
+            }
+        });
 		
 		// TODO - load the sound from res/raw/bubble_pop.wav
+        mSoundPool.load(this,R.raw.bubble_pop,1);
 		mSoundID = 0;
 
 	}
@@ -114,7 +120,6 @@ public class BubbleActivity extends Activity {
 	private void setupGestureDetector() {
 
 		mGestureDetector = new GestureDetector(this,
-
 		new GestureDetector.SimpleOnGestureListener() {
 
 			// If a fling gesture starts on a BubbleView then change the
@@ -147,16 +152,16 @@ public class BubbleActivity extends Activity {
 				// ViewGroup.getChildCount() method
 
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
+
+
+
+
 				return false;
 			}
 		});
@@ -166,7 +171,7 @@ public class BubbleActivity extends Activity {
 	public boolean onTouchEvent(MotionEvent event) {
 
 		// TODO - delegate the touch to the gestureDetector 
-
+        log("Touch Event");
 		
 		
 		
@@ -428,6 +433,9 @@ public class BubbleActivity extends Activity {
 
 		}
 	}
+
+
+
 
 	// Do not modify below here
 	@Override
